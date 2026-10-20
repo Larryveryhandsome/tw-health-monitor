@@ -26,6 +26,19 @@
 
 ---
 
+## 需要哪些金鑰？
+
+**不設定也能用**：異常會寫在 `data/last_run.txt`。想在手機收到通知，再設定下面任一種（都免費）：
+
+| 管道 | 要準備什麼 |
+|---|---|
+| Discord | 頻道的 Webhook 網址 |
+| LINE | Messaging API 的 Channel access token＋你自己的 userId |
+
+👉 **一步一步的申請與測試方法：[docs/金鑰申請.md](docs/金鑰申請.md)**。
+
+---
+
 ## 怎麼用
 
 **需要：** Python 3.9 以上。
