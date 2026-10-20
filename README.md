@@ -113,3 +113,18 @@ python -m unittest discover -s tests
 ## 授權
 
 [Apache License 2.0](LICENSE)
+
+## 🛠️ 需要客製化？
+
+這個工具是開源的，可以免費使用。如果你想要：
+- 改成符合你們公司的流程、欄位或品牌
+- 串接你現在在用的系統（LINE、Google 表單、POS、會計軟體……）
+- 幫你安裝、架站、教學，或長期維護
+
+歡迎加 LINE 跟我們聊。我們會依需求的範圍與複雜度報價，原則上以實際報價單為準。
+
+<a href="https://lin.ee/pdYGARu"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36"></a>
+
+- 💬 LINE 官方帳號：[@812ibtir](https://lin.ee/pdYGARu)（請註明「健康巡檢 客製化」）
+- 🏢 留白事務所：網頁設計、AI 自動化、房仲遠端助理
+- 👤 作者：[林其衞 Larry](https://github.com/Larryveryhandsome)
