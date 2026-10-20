@@ -4,6 +4,7 @@
   "db_max_mb": 500,
   "log_max_mb": 50,
   "disk_min_free_gb": 10,
+  "renotify_hours": 72,
   "projects": [
     {"name": "示範客服 bot", "path": "C:/services/demo-bot"},
     {"name": "示範爬蟲（不寫 log 的服務可以關掉 log 檢查）", "path": "C:/services/demo-crawler", "expect_logs": false},

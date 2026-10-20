@@ -5,7 +5,8 @@
 
 - **純唯讀**：只看檔案的大小和時間；SQLite 用 `immutable` 唯讀模式打開，不寫入、不上鎖，不會干擾正在跑的服務。
 - **沒事不吵**：健康就什麼都不輸出；每次結果都寫進 `data/state.json`，下次可以比較資料庫長大多少。
-- **通知失敗不會讓巡檢掛掉**：Discord／LINE 送不出去就只寫在 `data/last_run.txt`。
+- **不洗版**：同一個異常沒解決時，預設每 72 小時（`renotify_hours`，0＝每次都通知）才提醒一次；新異常馬上通知，好了會推一則「已恢復」。狀態記在 `data/notify_state.json`。
+- **通知失敗不會讓巡檢掛掉**：Discord／LINE 暫時性失敗（連線、429、5xx）會自動重試 3 次，仍失敗就只寫在 `data/last_run.txt`（網址與 token 會遮掉），下次巡檢再補送。
 - 只用 Python 標準庫，不用裝任何套件。
 
 ## 檢查什麼
@@ -97,6 +98,7 @@ python notify.py "測試一下"
 ```json
 {
   "log_stale_hours": 26,
+  "renotify_hours": 72,
   "projects": [
     {"name": "客服 bot", "path": "C:/services/my-bot"},
     {"name": "每小時排程", "path": "C:/services/hourly", "log_stale_hours": 3},
@@ -109,7 +111,7 @@ python notify.py "測試一下"
 }
 ```
 
-`outputs` 的路徑可以是檔案，也可以是資料夾（看裡面最新的一個檔）。Windows 路徑請用正斜線 `/`。
+設定檔寫錯（JSON 格式、缺 `path`、數字欄位填文字）會直接告訴你哪裡有問題，結束代碼 2。`outputs` 的路徑可以是檔案，也可以是資料夾（看裡面最新的一個檔）。Windows 路徑請用正斜線 `/`。
 
 ## 給開發者
 

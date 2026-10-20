@@ -145,8 +145,8 @@ class NotifyTest(unittest.TestCase):
         self.assertEqual(notify.send("hi", conf, post=post), [])
         os.environ.update(T_HOOK="https://example.invalid/hook", T_TOKEN="tok", T_TO="U" + "0" * 32)
         self.assertEqual(notify.send("x" * 3000, conf, post=post), ["discord", "line"])
-        self.assertEqual(len(calls[0][1]["content"]), 1900)
-        self.assertEqual(calls[1][2]["Authorization"], "Bearer tok")
+        self.assertEqual(len(calls[0][1]["content"]), 1900)   # 超長訊息分成多則，第一則不超過 1900
+        self.assertEqual(calls[-1][2]["Authorization"], "Bearer tok")
 
     def test_failure_does_not_raise(self):
         os.environ["T_HOOK"] = "https://example.invalid/hook"
