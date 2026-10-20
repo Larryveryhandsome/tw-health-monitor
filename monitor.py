@@ -230,8 +230,13 @@ def main(argv):
         print(text)
     if "--no-notify" not in argv:
         import notify
-        channels = notify.send(text, cfg.get("notify", {}))
-        print(f"通知管道：{', '.join(channels) or '（沒有設定，只印出來）'}")
+        errors = []
+        channels = notify.send(text, cfg.get("notify", {}), errors=errors)
+        print(f"通知管道：{', '.join(channels) or '（沒有送出任何通知）'}")
+        if errors:
+            print("通知失敗：" + "；".join(errors))
+        with (data_dir / "last_run.txt").open("a", encoding="utf-8") as f:  # 背景執行看不到畫面，結果也留一份
+            f.write(f"通知管道：{', '.join(channels) or '無'}\n" + "".join(f"通知失敗 {e}\n" for e in errors))
     return 1
 
 

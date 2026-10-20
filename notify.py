@@ -38,10 +38,12 @@ def line_push(text, token, to, post=_post):
                 {"Authorization": f"Bearer {token}"})
 
 
-def send(text, conf: dict, post=_post) -> list:
+def send(text, conf: dict, post=_post, errors: list = None) -> list:
     """依設定送出，回傳成功的管道名稱。conf 例：
     {"discord_webhook_env": "DISCORD_WEBHOOK_URL", "line_token_env": "LINE_CHANNEL_ACCESS_TOKEN", "line_to_env": "LINE_TO"}
+    errors：選用的 list，送失敗的管道會把「管道：原因」加進去（呼叫端可寫進 last_run.txt，背景執行時 stderr 看不到）。
     """
+    errors = errors if errors is not None else []
     load_dotenv()
     sent = []
     hook = os.getenv(conf.get("discord_webhook_env", "DISCORD_WEBHOOK_URL"), "")
@@ -49,7 +51,10 @@ def send(text, conf: dict, post=_post) -> list:
         try:
             if discord(text, hook, post):
                 sent.append("discord")
+            else:
+                errors.append("discord：回應不是 2xx")
         except Exception as e:
+            errors.append(f"discord：{e}")
             sys.stderr.write(f"[notify] Discord 失敗：{e}\n")
     token = os.getenv(conf.get("line_token_env", "LINE_CHANNEL_ACCESS_TOKEN"), "")
     to = os.getenv(conf.get("line_to_env", "LINE_TO"), "")
@@ -57,7 +62,10 @@ def send(text, conf: dict, post=_post) -> list:
         try:
             if line_push(text, token, to, post):
                 sent.append("line")
+            else:
+                errors.append("line：回應不是 2xx")
         except Exception as e:
+            errors.append(f"line：{e}")
             sys.stderr.write(f"[notify] LINE 失敗：{e}\n")
     return sent
 

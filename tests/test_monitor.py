@@ -155,6 +155,30 @@ class NotifyTest(unittest.TestCase):
             raise OSError("down")
         self.assertEqual(notify.send("hi", {"discord_webhook_env": "T_HOOK"}, post=boom), [])
 
+    def test_failure_is_recorded_in_errors_list(self):
+        os.environ["T_HOOK"] = "https://example.invalid/hook"
+
+        def boom(*a, **k):
+            raise OSError("down")
+        errs = []
+        self.assertEqual(notify.send("hi", {"discord_webhook_env": "T_HOOK"}, post=boom, errors=errs), [])
+        self.assertEqual(len(errs), 1)
+        self.assertIn("discord", errs[0])
+        self.assertIn("down", errs[0])
+
+    def test_main_records_notify_failure_in_last_run(self):
+        """背景（pythonw）執行時看不到畫面，通知送不出去要在 last_run.txt 留下紀錄。"""
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            touch(root / "svc" / "logs" / "app.log", hours_ago=99)
+            cfg = dict(monitor.DEFAULTS, projects=[{"name": "示範服務", "path": str(root / "svc")}],
+                       disk_min_free_gb=0, data_dir=str(root / "data"), notify={"discord_webhook_env": "T_HOOK"})
+            (root / "config.json").write_text(json.dumps(cfg, ensure_ascii=False), encoding="utf-8")
+            os.environ["T_HOOK"] = "http://127.0.0.1:9/hook"  # 沒人在聽的 port，連線一定失敗
+            self.assertEqual(monitor.main(["--config", str(root / "config.json")]), 1)
+            text = (root / "data" / "last_run.txt").read_text(encoding="utf-8")
+            self.assertIn("通知失敗 discord", text)
+
 
 if __name__ == "__main__":
     unittest.main()
