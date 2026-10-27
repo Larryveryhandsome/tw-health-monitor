@@ -1,0 +1,23 @@
+{
+  "_說明": "複製成 config.json 再改。路徑在 Windows 請用正斜線（例如 C:/services/my-bot），或把每個反斜線寫兩次。",
+  "log_stale_hours": 26,
+  "db_max_mb": 500,
+  "log_max_mb": 50,
+  "disk_min_free_gb": 10,
+  "renotify_hours": 72,
+  "projects": [
+    {"name": "示範客服 bot", "path": "C:/services/demo-bot"},
+    {"name": "示範爬蟲（不寫 log 的服務可以關掉 log 檢查）", "path": "C:/services/demo-crawler", "expect_logs": false},
+    {"name": "示範每小時排程", "path": "/home/demo/jobs/hourly", "log_stale_hours": 3}
+  ],
+  "outputs": [
+    {"name": "每日報表", "path": "C:/services/reports/daily.html", "max_age_hours": 36},
+    {"name": "備份資料夾（看裡面最新的一個檔）", "path": "D:/backup", "max_age_hours": 48}
+  ],
+  "extra_disks": [],
+  "notify": {
+    "discord_webhook_env": "DISCORD_WEBHOOK_URL",
+    "line_token_env": "LINE_CHANNEL_ACCESS_TOKEN",
+    "line_to_env": "LINE_TO"
+  }
+}
