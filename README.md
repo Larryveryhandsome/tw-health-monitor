@@ -138,8 +138,8 @@ python -m unittest discover -s tests
 
 歡迎加 LINE 跟我們聊。我們會依需求的範圍與複雜度報價，原則上以實際報價單為準。
 
-<a href="https://lin.ee/pdYGARu"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36"></a>
+<a href="https://line.me/ti/p/xzHT2IywOM"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36"></a>
 
-- 💬 LINE 官方帳號：[@812ibtir](https://lin.ee/pdYGARu)（請註明「健康巡檢 客製化」）
+- 💬 LINE：[林其衞](https://line.me/ti/p/xzHT2IywOM)（請註明「健康巡檢 客製化」）
 - 🏢 留白事務所：網頁設計、AI 自動化、房仲遠端助理
 - 👤 作者：[留白事務所](https://github.com/Larryveryhandsome)

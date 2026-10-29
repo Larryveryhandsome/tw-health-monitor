@@ -133,11 +133,11 @@ class MonitorTest(unittest.TestCase):
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             monitor.main(["--config", str(cfg_file), "--report", "--no-notify"])
         json.loads(out.getvalue())
-        self.assertIn("@812ibtir", err.getvalue())
+        self.assertIn("0928-880-392", err.getvalue())
         err = io.StringIO()
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(err):
             monitor.main(["--config", str(self.root / "missing.json")])
-        self.assertIn("https://line.me/R/ti/p/@812ibtir", err.getvalue())
+        self.assertIn("https://line.me/ti/p/xzHT2IywOM", err.getvalue())
 
     def test_example_config_is_valid(self):
         cfg = monitor.load_config(ROOT / "config.example.json")
